@@ -1,4 +1,4 @@
-import os, glob
+import os, glob        # import modules
 path = './iterables'   # set our directory path
 
 # Here is our function
