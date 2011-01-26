@@ -18,14 +18,14 @@ my_filenames = glob.glob('data/iterables/*.csv')
 
 # Now loop through the files and read the data
 for infile in my_filenames:
-    a = open(infile)   # open the file, assign it to a
-    print a.read()     # call the process function, pass in a
-    a.close()          # close the file
+    a = open(infile)
+    print a.read() 
+    a.close() # it's always wise to close your files after use :-)
 
 
 # Alternatively, you can combine the "for" loop and glob
 # into a single line of code
 for infile in glob.glob('data/iterables/*.csv'):
-    a = open(infile)   # open the file, assign it to a
-    print a.read()     # call the process function, pass in a
-    a.close()          # close the file
+    a = open(infile)
+    print a.read()
+    a.close()
