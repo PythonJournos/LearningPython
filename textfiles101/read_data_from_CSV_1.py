@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 """
 Below is a bare-bones example showing how to read data from a CSV.
 
