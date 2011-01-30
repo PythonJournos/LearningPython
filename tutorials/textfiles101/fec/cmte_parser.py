@@ -18,10 +18,9 @@ The data dictionary describes the fields in the "foiacm.dta" file,
 contained in cm12.zip. It contains info such as the field's name,
 start and end positions, and length.
 
-Below, we've hard-coded the header values below from the data
-dictionary. Ideally, in a real-world application, these header 
-values would be extracted dynamically from an external source 
-such as the data dictionary. 
+Below, we've hard-coded the header values from the data dictionary. 
+Ideally, in a real-world application, these header values would be 
+extracted dynamically from an external source such as the data dictionary. 
 
 See below for additional ideas on how to improve and extend this code sample.
 
@@ -42,9 +41,7 @@ See below for additional ideas on how to improve and extend this code sample.
 """
 
 # Below are three data points from our data dictionary:
-# name, start-end position, number of characters
-# remember that we're extracting these header values
-# initially as strings
+#     name, start-end position, number of characters
 headers = [
   ("Committee Identification",      "1-9",     "9"),
   ("Committee Name",                "10-99",   "90"),
@@ -66,10 +63,8 @@ headers = [
 def get_column_offsets(headers):
     """
     Two key rules to remember when using the slice notation
-      1) Values are zero-indexed, meaning you start counting from 
-           0 instead of 1
-      2) The first index in the slice notation is *inclusive*, while 
-         the second is *exclusive*
+      1) Values are zero-indexed, so you start counting from 0 instead of 1
+      2) The first index in slice notation is *inclusive* and the second is *exclusive*
     
     >>> x = 'Python'
     >>> x[0:2] # get the first two letters (positions 0 and 1)
@@ -77,17 +72,15 @@ def get_column_offsets(headers):
     """ 
     column_offsets = []
     for header in headers:
-        # We do a bunch of work in one line below
+        # We do a bunch of work in one line below:
         #  Extract the second item from the tuple
-        #  Split that item on the dash
-        #  Assign the resulting values from the split operation 
-        #    to a pair of variables (start_value, end_value)
+        #  Split that item on the dash into two values 
+        #  Assign those values to the start_value and end_value variables
         start_value, end_value = header[1].split('-')
-        # Before  our indexes, we need to convert our 
-        # values from strings to integers, and "zero-index" our
-        # start position by subtracting 1 
+        # Before storing our indexes, we convert the strings values to integers 
+        # and "zero-index" our start position by subtracting 1 
         column_offsets.append( (int(start_value) - 1, int(end_value)) )
-    # finally, we return our list of column offsets
+    # Finally, we return our list of column offsets
     return column_offsets
 
 
@@ -110,11 +103,11 @@ def parse_data():
         # Now, step through each of our column_offsets
         # and use them to extract the fields from our
         # line. Recall that the values in the column_offsets
-        # list are just tuples like (0-9). So below,
+        # list are just tuples like (0-9).
         for start, end in column_offsets:
             # ADDITIONAL DATA CLEANING HERE
             # Below, we're just appending each column
-            # to a list, and then returning that list. 
+            # to a list and then returning that list. 
             # In a real application, this would be a good place
             # to do some additional data clean-up,
             # such as calling the strip method on each 
