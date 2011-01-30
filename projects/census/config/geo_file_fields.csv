@@ -1,0 +1,80 @@
+File Identification|FILEID|6|1
+State/US-Abbreviation (USPS)|STUSAB|2|7
+Summary Level|SUMLEV|3|9
+Geographic Component|GEOCOMP|2|12
+Characteristic Iteration|CHARITER|3|14
+Characteristic Iteration File Sequence Number|CIFSN|2|17
+Logical Record Number|LOGRECNO|7|19
+Region|REGION|1|26
+Division|DIVISION|1|27
+State (Census)|STATECE|2|28
+State (FIPS)|STATE|2|30
+County|COUNTY|3|32
+County Size Code|COUNTYSC|2|35
+County Subdivision (FIPS)|COUSUB|5|37
+FIPS County Subdivision Class Code|COUSUBCC|2|42
+County Subdivision Size Code|COUSUBSC|2|44
+Place (FIPS)|PLACE|5|46
+FIPS Place Class Code|PLACECC|2|51
+Place Description Code|PLACEDC|1|53
+Place Size Code|PLACESC|2|54
+Census Tract|TRACT|6|56
+Block Group|BLKGRP|1|62
+Block|BLOCK|4|63
+Internal Use Code|IUC|2|67
+Consolidated City (FIPS)|CONCIT|5|69
+FIPS Consolidated City Class Code|CONCITCC|2|74
+Consolidated City Size Code|CONCITSC|2|76
+American Indian Area/Alaska Native Area/Hawaiian Home Land (Census)|AIANHH|4|78
+American Indian Area/Alaska Native Area/Hawaiian Home Land (FIPS)|AIANHHFP|5|82
+FIPS American Indian Area/Alaska Native Area/Hawaiian Home Land Class Code|AIANHHCC|2|87
+American Indian Trust Land/Hawaiian Home Land Indicator|AIHHTLI|1|89
+American Indian Tribal Subdivision (Census)|AITSCE|3|90
+American Indian Tribal Subdivision (FIPS)|AITS|5|93
+FIPS American Indian Tribal Subdivision Class Code|AITSCC|2|98
+Alaska Native Regional Corporation (FIPS)|ANRC|5|100
+FIPS Alaska Native Regional Corporation Class Code|ANRCCC|2|105
+Metropolitan Statistical Area/Consolidated Metropolitan Statistical Area|MSACMSA|4|107
+MSA/CMSA Size Code|MASC|2|111
+Consolidated Metropolitan Statistical Area|CMSA|2|113
+Metropolitan Area Central City Indicator|MACCI|1|115
+Primary Metropolitan Statistical Area|PMSA|4|116
+New England County Metropolitan Area|NECMA|4|120
+New England County Metropolitan Area Central City Indicator|NECMACCI|1|124
+New England County Metropolitan Area Size Code|NECMASC|2|125
+Extended Place Indicator|EXI|1|127
+Urban Area|UA|5|128
+Urban Area Size Code|UASC|2|133
+Urban Area Type|UATYPE|1|135
+Urban/Rural|UR|1|136
+Congressional District (106th)|CD106|2|137
+Congressional District (108th)|CD108|2|139
+Congressional District (109th)|CD109|2|141
+Congressional District (110th)|CD110|2|143
+State Legislative District (Upper Chamber)|SLDU|3|145
+State Legislative District (Lower Chamber)|SLDL|3|148
+Voting District|VTD|6|151
+Voting District Indicator|VTDI|1|157
+ZIP Code Tabulation Area (3 digit)|ZCTA3|3|158
+ZIP Code Tabulation Area (5 digit)|ZCTA5|5|161
+Subbarrio (FIPS)|SUBMCD|5|166
+FIPS Subbarrio Class Code|SUBMCDCC|2|171
+Area (Land)|AREALAND|14|173
+Area (Water)|AREAWATR|14|187
+Area Name-Legal/Statistical Area Description (LSAD) Term-Part Indicator|NAME|90|201
+Functional Status Code|FUNCSTAT|1|291
+Geographic Change User Note Indicator|GCUNI|1|292
+Population Count (100%)|POP100|9|293
+Reserved|RES|9|302
+Internal Point (Latitude)|INTPTLAT|9|311
+Internal Point (Longitude)|INTPTLON|10|320
+Legal/Statistical Area Description Code|LSADC|2|330
+Part Flag|PARTFLAG|1|332
+School District (Elementary)|SDELM|5|333
+School District (Secondary)|SDSEC|5|338
+School District (Unified)|SDUNI|5|343
+Traffic Analysis Zone|TAZ|6|348
+Oregon Urban Growth Area|UGA|5|354
+Public Use Microdata Area - 5% File|PUMA5|5|359
+Public Use Microdata Area - 1% File|PUMA1|5|364
+Reserved|RESERVED|32|369
