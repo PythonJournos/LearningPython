@@ -1,4 +1,7 @@
-
+"""
+This script performs a Twitter search on Egypt, for English language tweets.  Using the Twitter JSON API, it takes those tweets, iterates through returned JSON files
+and pulls key information into a CSV.  Could be adapted to transform other JSON APIs into structured data in spreadsheet or database form.
+"""
 
 #To put this into a CSV, csv code adapted from this recipe (http://www.palewire.com/posts/2009/03/03/django-recipe-dump-your-queryset-out-as-a-csv-file/) of Ben Welsh at the LAT (who taught me much of this while I interned over there):
 
@@ -19,13 +22,13 @@ import csv
 from time import sleep
 
 # tell computer where to put CSV
-outfile_path='/path/to/my/file.csv'
+outfile_path='/Users/MichelleMinkoff/Desktop/test.csv'
 
 # open it up, the w means we will write to it
 writer = csv.writer(open(outfile_path, 'w'))
 
 #create a list with headings for our columns
-headers = ['user', 'tweet_text']
+headers = ['user', 'date_created','tweet_text','longitude', 'latitude']
 
 #write the row of headings to our CSV file
 writer.writerow(headers)
@@ -50,17 +53,34 @@ while i<100:
     print parsed_json
 
 
+#TRANSFORM JSON INTO STRUCTURED ROWS THAT FORM OUR CSV
 
-    #run through each item in results, and jump to an item in that dictionary, in this case, the text of the tweet	
+
+    #run through each item in results, and jump to an item in that dictionary, in this case, the text of the tweet    
     for tweet in parsed_json['results']:
-    		#initialize the row
-    		row = []
-    		#add every 'cell' to the row list, identifying the item just like an index in a list
-    		row.append(str(tweet['from_user'].encode('utf-8')))	       
-    		row.append(str(tweet['created_at'].encode('utf-8')))
-    		row.append(str(tweet['text'].encode('utf-8')))
-    		#once you have all the cells in there, write the row to your csv
-    		writer.writerow(row)
+            print tweet['geo']
+            #initialize the row
+            row = []
+            #add every 'cell' to the row list, identifying the item just like an index in a list
+            row.append(str(tweet['from_user'].encode('utf-8')))           
+            row.append(str(tweet['created_at'].encode('utf-8')))
+            row.append(str(tweet['text'].encode('utf-8')))
+            #Often, no geo info comes with the tweet.  Python can't grab nothing, so it'll choke.
+            #We help the computer out by putting on a condition: Only do the following, if there's a value to go with the geo key.
+            if tweet['geo']:
+                #We need to dig into the geo object, which is yet ANOTHER dictionary, to get to the coordinates list.
+                #Then separate that list into two separate columns, so we can deal w/lat + long separately.
+                # We use the index to specify which item in the list we care about.
+                row.append(str(tweet['geo']['coordinates'][0]).encode('utf-8'))
+                row.append(str(tweet['geo']['coordinates'][1]).encode('utf-8'))
+           # Wait!  What if there's no geo information?  Let's fill those cells in with empty strings.
+           #It's not a big deal here, but if we had more columns after the blank ones, without something in these cells, the next cells would be two columns off.
+           #The list structure takes positions very literally, so I've found it to be good practice to fill in cells with an else condition to avoid mistakes.
+            else:
+                row.append("")
+                row.append("")
+            #once you have all the cells in there, write the row to your csv
+            writer.writerow(row)
     #increment our loop counter, now we're on the next time through the loop
     i = i +1
     #tell Python to rest for 5 secs, so we don't exceed our rate limit
