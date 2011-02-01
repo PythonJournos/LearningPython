@@ -58,7 +58,6 @@ while i<100:
 
     #run through each item in results, and jump to an item in that dictionary, in this case, the text of the tweet    
     for tweet in parsed_json['results']:
-            print tweet['geo']
             #initialize the row
             row = []
             #add every 'cell' to the row list, identifying the item just like an index in a list
