@@ -28,7 +28,7 @@ outfile_path='/Users/MichelleMinkoff/Desktop/test.csv'
 writer = csv.writer(open(outfile_path, 'w'))
 
 #create a list with headings for our columns
-headers = ['user', 'date_created','tweet_text','longitude', 'latitude']
+headers = ['user', 'date_created','tweet_text','latitude', 'longitude']
 
 #write the row of headings to our CSV file
 writer.writerow(headers)
@@ -41,8 +41,8 @@ writer.writerow(headers)
 #set a counter telling us how many times we've gone through the loop, this is the first time, so we'll set it at 1
 i=1
 
-#loop through pages of JSON returned, 100 is an arbitrary number
-while i<100:
+#loop through pages of JSON returned, if you have 100 tweets per pg, and there's 1500 tweet limit on searches, 15 pages will do it
+while i<=15:
     #print out what number loop we are on, which will make it easier to track down problems when they appear
     print i
     #create the URL of the JSON file we want.  We search for 'egypt', want English tweets, and set the number of tweets per JSON file to the max of 100, so we have to do as little looping as possible
