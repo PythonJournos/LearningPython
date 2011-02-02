@@ -1,0 +1,283 @@
+revised 09/29/2008
+ITEMIZED RECORDS (MISCELLANEOUS TRANSACTONS)
+Federal Election Commission   
+999 E Street, NW    
+Washington, DC  20463         
+
+DATA DESCRIPTION       
+Itemized Records (Miscellaneous Transactions) File      
+
+The zipped file should be downloaded as binary and unzipped.    
+
+Summary:  The itemized records (miscellaneous transactions)file contains all transactions (contribution, transfers, etc. among federal committees).  It contains all data in the itemized committee contributions file plus PAC contributions to party committees, party transfers from state committee to state committee, and party transfers from national committee to state committee.    
+
+Universe:  All committee transactions.  
+
+Associated Files:
+
+Data File:  		OTHXX.ZIP
+Frequency Counts:	OTHXX.TXT
+Data Dictionary:	OTH_DICTIONARY.TXT	
+
+
+
+   The variables have been formatted in the following ways: 
+
+
+
+        Mnemonics   
+        Currently   
+        Used by the       Field         
+        Commission    Variable       Columns  Desc.         
+
+        ---------------------------------------------------------------         
+
+  ITEM-FILER    Filer Identification Number		1-9       9s  
+  ITEM-AMEND    Amendment Indicator      		10        1s  
+  ITEM-REPT     Report Type    				11-13     3s  
+  ITEM-PGI      Primary-General Indicator		14        1s  
+  ITEM-MICRO    Microfilm Location (YYOORRRFFFF)   	15-25    11s 
+  ITEM-TRANS    Transaction Type         		26-28     3s  
+  ITEM-NAME     Contributor/Lender/Transfer Name   	29-62    34s 
+  ITEM-CTY      City/Town      				63-80    18s 
+  ITEM-ST       State					81-82     2s  
+  ITEM-ZIP      Zip Code       				83-87     5s  
+  ITEM-OCCU     Occupation     				88-122   35s 
+  IT-TMN        Transaction Date - Month 		123-124   2d  
+  IT-TDY        Transaction Date - Day   		125-126   2d  
+  IT-TCC        Transaction Date - Century         	127-128   2d  
+  IT-TYY        Transaction Date - Year  		129-130   2d  
+  ITEM-AMT      Amount         				131-137   7n  
+  ITEM-OID      Other Identification Number        	138-146   9s  
+  ITEM-RN       FEC Record Number        		147-153   7s  
+
+
+VARIABLE DOCUMENTATION        
+
+ Filer Identification Number  
+ Columns 1-9        
+ String   
+
+ The 9-character alpha-numeric code assigned to a committee by the Federal Election Commission. 
+
+ ---------
+ Amendment Indicator
+ Columns 10-10      
+ String   
+
+A	AMENDMENT
+C	CONSOLIDATED
+M	MULTI-CANDIDATE
+N	NEW
+S	SECONDARY
+T	TERMINATED
+
+ 
+ ---------
+ Report Type        
+ Columns 11-13      
+ String   
+
+Indicates the type of report filed.    
+
+10D	PRE-ELECTION
+10G	PRE-GENERAL
+10P	PRE-PRIMARY
+10R	PRE-RUN-OFF
+10S	PRE-SPECIAL
+12C	PRE-CONVENTION
+12G	PRE-GENERAL
+12P	PRE-PRIMARY
+12R	PRE-RUN-OFF
+12S	PRE-SPECIAL
+30D	POST-ELECTION
+30G	POST-GENERAL
+30P	POST-PRIMARY
+30R	POST-RUN-OFF
+30S	POST-SPECIAL
+60D	POST-ELECTION
+ADJ	COMP ADJUST AMEND
+CA	COMPREHENSIVE AMEND
+M1	JANUARY MONTHLY
+M10	OCTOBER MONTHLY
+M11	NOVEMBER MONTHLY
+M12	DECEMBER MONTHLY
+M2	FEBRUARY MONTHLY
+M3	MARCH MONTHLY
+M4	APRIL MONTHLY
+M5	MAY MONTHLY
+M6	JUNE MONTHLY
+M7	JULY MONTHLY
+M8	AUGUST MONTHLY
+M9	SEPTEMBER MONTHLY
+MY	MID-YEAR REPORT
+Q1	APRIL QUARTERLY
+Q2	JULY QUARTERLY
+Q3	OCTOBER QUARTERLY
+TER	TERMINATION REPORT
+YE	YEAR-END
+90S	POST INAUGURAL SUPPLEMENT
+90D	POST INAUGURAL
+48H	48 HOUR NOTIFICATION
+24H	24 HOUR NOTIFICATION
+
+ ---------
+ Primary-General Indicator    
+ Columns 14-14      
+ String   
+
+C	CONVENTION
+G	GENERAL
+P	PRIMARY
+R	RUNOFF
+S	SPECIAL
+
+This code indicates the type of election or if the committee is retiring debt.  Numeric codes are for those transactions that are retiring previous election cycle debt.  Alpha codes are for those transactions related to the current election cycle.  
+
+ ---------
+ Microfilm Location (YYOORRRFFFF)       
+ Columns 15-25      
+ String   
+
+ Indicates the physical location of the filing.   
+
+ ---------
+ Transaction Type   
+ Columns 26-28      
+ String   
+
+ Indicates the type of transaction reported.      
+10	NON-FEDERAL RECEIPT FROM PERSONS LEVIN (L-1A)
+11	TRIBAL CONTRIBUTION
+12	NON-FEDERAL OTHER RECEIPT LEVIN  (L-2)
+13	INAUGURAL DONATION ACCEPTED
+15	CONTRIBUTION
+15C	CONTRIBUTION FROM CANDIDATE
+15E	EARMARKED CONTRIBUTION
+15F	LOANS FORGIVEN BY CANDIDATE
+15I	EARMARKED INTERMEDIARY IN
+15J	MEMO (FILER'S % OF CONTRIBUTION GIVEN TO JOIN
+15T	EARMARKED INTERMEDIARY TREASURY IN
+15Z	IN-KIND CONTRIBUTION RECEIVED FROM REGISTERED
+16C	LOANS RECEIVED FROM THE CANDIDATE
+16F	LOANS RECEIVED FROM BANKS
+16G	LOAN FROM INDIVIDUAL
+16H	LOAN FROM CANDIDATE/COMMITTEE
+16J	LOAN REPAYMENTS FROM INDIVIDUAL
+16K	LOAN REPAYMENTS FROM CANDIDATE/COMMITTEE
+16L	LOAN REPAYMENTS RECEIVED FROM UNREGISTERED EN
+16R	LOANS RECEIVED FROM REGISTERED FILERS
+16U	LOAN RECEIVED FROM UNREGISTERED ENTITY
+17R	CONTRIBUTION REFUND RECEIVED FROM REGISTERED 
+17U	REF/REB/RET RECEIVED FROM UNREGISTERED ENTITY
+17Y	REF/REB/RET FROM INDIVIDUAL/CORPORATION
+17Z	REF/REB/RET FROM CANDIDATE/COMMITTEE
+18G	TRANSFER IN AFFILIATED
+18H	HONORARIUM RECEIVED
+18J	MEMO (FILER'S % OF CONTRIBUTION GIVEN TO JOIN
+18K	CONTRIBUTION RECEIVED FROM REGISTERED FILER
+18S	RECEIPTS FROM SECRETARY OF STATE
+18U	CONTRIBUTION RECEIVED FROM UNREGISTERED COMMI
+19	ELECTIONEERING COMMUNICATION DONATION RECEIVE
+19J	MEMO (ELECTIONEERING COMMUNICATION % OF DONAT
+20	DISBURSEMENT - EXEMPT FROM LIMITS
+20A	NON-FEDERAL DISBURSEMENT LEVIN (L-4A) VOTER R
+20B	NON-FEDERAL DISBURSEMENT LEVIN (L-4B) VOTER I
+20C	LOAN REPAYMENTS MADE TO CANDIDATE
+20D	NON-FEDERAL DISBURSEMENT LEVIN (L-4D) GENERIC
+20F	LOAN REPAYMENTS MADE TO BANKS
+20G	LOAN REPAYMENTS MADE TO INDIVIDUAL
+20R	LOAN REPAYMENTS MADE TO REGISTERED FILER
+20V	NON-FEDERAL DISBURSEMENT LEVIN (L-4C) GET OUT
+22G	LOAN TO INDIVIDUAL
+22H	LOAN TO CANDIDATE/COMMITTEE
+22J	LOAN REPAYMENT TO INDIVIDUAL
+22K	LOAN REPAYMENT TO CANDIDATE/COMMITTEE
+22L	LOAN REPAYMENT TO BANK
+22R	CONTRIBUTION REFUND TO UNREGISTERED ENTITY
+22U	LOAN REPAID TO UNREGISTERED ENTITY
+22X	LOAN MADE TO UNREGISTERED ENTITY
+22Y	CONTRIBUTION REFUND TO INDIVIDUAL
+22Z	CONTRIBUTION REFUND TO CANDIDATE/COMMITTEE
+23Y	INAUGURAL DONATION REFUND
+24A	INDEPENDENT EXPENDITURE AGAINST
+24C	COORDINATED EXPENDITURE
+24E	INDEPENDENT EXPENDITURE FOR
+24F	COMMUNICATION COST FOR CANDIDATE (C7)
+24G	TRANSFER OUT AFFILIATED
+24H	HONORARIUM TO CANDIDATE
+24I	EARMARKED INTERMEDIARY OUT
+24K	CONTRIBUTION MADE TO NON-AFFILIATED
+24N	COMMUNICATION COST AGAINST CANDIDATE (C7)
+24P	CONTRIBUTION MADE TO POSSIBLE CANDIDATE
+24R	ELECTION RECOUNT DISBURSEMENT
+24T	EARMARKED INTERMEDIARY TREASURY OUT
+24U	CONTRIBUTION MADE TO UNREGISTERED
+24Z	IN-KIND CONTRIBUTION MADE TO REGISTERED FILER
+29	ELECTIONEERING COMMUNICATION DISBURSEMENT(S) 
+
+
+ ---------
+ Name     
+ Columns 29-62      
+ String   
+
+ Reported name of the contributor.      
+
+ ---------
+ City     
+ Columns 63-80      
+ String   
+
+ ----------         
+ State    
+ Columns 81-83      
+ String   
+
+ ---------
+ ZIP Code 
+ Columns 83-87      
+ String   
+ Note:  City, State, and ZIP Code information are as reported.        
+
+ ---------
+ Occupation         
+ Columns 88-122     
+ String   
+
+ Reported occupation of donor.
+
+ ---------
+ Month    
+ Columns 123-124    
+ Date     
+
+ ---------
+ Day      
+ Columns 125-126    
+ Date     
+
+ ---------
+ Year     
+ Columns 129-130    
+ Date     
+
+ ---------
+ Amount   
+ Columns 131-137    
+ Numeric  
+
+ In the fixed width text file, the amounts are in COBOL format.  If the value is negative, the right most column will contain a special character:  ] = -0, j = -1, k = -2,  l = -3, m = -4, n = -5, o = -6, p = -7, q = -8, and r = -9.
+
+ ---------
+ Other Identification Number  
+ Columns 138-146    
+ String   
+
+ For contributions from individuals this variable is null. For contributions from candidates or other committees this variable will indicate that contributor.         
+
+ ---------
+ FEC Record Number  
+ Columns  147-153   
+
+
