@@ -11,12 +11,12 @@ Prior to running this script, you should:
     data1tablename, data2tablename)
 
 There are three types of files:
- * Geographic header files (*geo.txt)
- * Data files (first set) (*01.txt)
- * Data files (second set) (*02.txt)
+ * Geographic header files (*geo2010.pl)
+ * Data files (first set) (*012010.pl)
+ * Data files (second set) (*022010.pl)
 
-The script will ignore any files that do not have a .txt extension.
-Similarly, the program will stop if it finds a .txt file that does
+The script will ignore any files that do not have a .pl extension.
+Similarly, the program will stop if it finds a .pl file that does
 not meet one of the above three criteria for valid files.
 
 '''
@@ -201,16 +201,16 @@ SQL = 'CREATE TABLE IF NOT EXISTS "' + data2tablename + '''" (
 cursor.execute(SQL)
 
 # Iterate through each file in the directory
-for datafile in glob.glob(os.path.join(srcDir, '*.txt')):
+for datafile in glob.glob(os.path.join(srcDir, '*.pl')):
 
     # Determine file type
-    if datafile.endswith('geo.txt'):
+    if datafile.endswith('geo2010.pl'):
         datatable = 'geo'
         datacount = 100     # 101 fields
-    elif datafile.endswith('01.txt'):
+    elif datafile.endswith('012010.pl'):
         datatable = data1tablename
         datacount = 148     # 149 fields
-    elif datafile.endswith('02.txt'):
+    elif datafile.endswith('022010.pl'):
         datatable = data2tablename
         datacount = 151     # 152 fields
     else:
