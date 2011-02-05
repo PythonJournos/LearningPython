@@ -73,7 +73,7 @@ def main():
         clean_address = parse_address(address)
         
         # Finally, we write out our new line with the clean address. Note
-        # that the "writerow" method requires a list of data of data
+        # that the "writerow" method requires a list of data
         output_file.writerow([price, clean_address, city, state, zipcode, orig])
 
 
