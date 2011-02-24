@@ -1,0 +1,234 @@
+
+'''
+This script is used to import 2010 Census redisticting data
+into a SQLite database.
+Written using Python 2.7.
+
+Prior to running this script, you should:
+1 - Set the source directory (srcDir)
+2 - Make sure your data files are in that directory.
+3 - Set the names of your three SQLite tables (geotablename,
+    data1tablename, data2tablename)
+
+There are three types of files:
+ * Geographic header files (*geo2010.pl)
+ * Data files (first set) (*012010.pl)
+ * Data files (second set) (*022010.pl)
+
+The script will ignore any files that do not have a .pl extension.
+Similarly, the program will stop if it finds a .pl file that does
+not meet one of the above three criteria for valid files.
+
+'''
+
+# import modules
+import os
+import glob
+import sqlite3
+from struct import unpack
+
+# Specify source directory (defaults to home dir)
+srcDir = '~/Census2010Data/'
+
+# Specify path of SQLite database
+dbpath = '~/Census2010Data/CenRedistData2010.sqlite'
+
+# Specify table names
+geotablename = 'tblGeo'
+data1tablename = 'tblData1'
+data2tablename = 'tblData2'
+
+# Create string to give field lengths
+# for fixed-width geo header file
+geofields = '6s2s3s2s3s2s7s1s1s2s3s2s2s5s2s2s5s2s2s6s1s4s2s5s2s2s4s5s2s1s3s5s2s6s1s5s2s5s2s5s3s5s2s5s3s1s1s5s2s1s1s2s3s3s6s1s3s5s5s2s5s5s5s14s14s90s1s1s9s9s11s12s2s1s6s5s8s8s8s8s8s8s8s8s8s2s2s2s3s3s3s3s3s3s2s2s2s1s1s5s18s'
+
+# Connect to the sqlite database
+db = sqlite3.connect(dbpath)
+
+# Create a cursor
+cursor = db.cursor()
+
+# Run SQL scripts to create the data tables if they don't exist:
+# --------------------------------------------------------------
+# Geography Header table
+SQL = 'CREATE TABLE IF NOT EXISTS "' + geotablename + '''" (
+"FILEID" char(6) NOT NULL, "STUSAB" char(2) NOT NULL,
+"SUMLEV" char(3) NOT NULL, "GEOCOMP" char(2) NOT NULL,
+"CHARITER" char(3) NOT NULL, "CIFSN" char(2) NOT NULL,
+"LOGRECNO" char(7) NOT NULL,
+"REGION" char(1) NOT NULL, "DIVISION" char(1) NOT NULL,
+"STATECODE" char(2) NOT NULL, "COUNTY" char(3), "COUNTYCC" char(2),
+"COUNTYSC" char(2), "COUSUB" char(5), "COUSUBCC" char(2),
+"COUSUBSC" char(2), "PLACE" char(5), "PLACECC" char(2),
+"PLACESC" char(2), "TRACT" char(6), "BLKGRP" char(1), "BLOCK" char(4),
+"IUC" char(2), "CONCIT" char(5), "CONCITCC" char(2), "CONCITSC" char(2),
+"AIANHH" char(4), "AIANHHFP" char(5), "AIANHHCC" char(2),
+"AIHHTLI" char(1), "AITSCE" char(3), "AITS" char(5), "AITSCC" char(2),
+"TTRACT" char(6), "TBLKGRP" char(1), "ANRC" char(5), "ANRCCC" char(2),
+"CBSA" char(5), "CBSASC" char(2), "METDIV" char(5), "CSA" char(3),
+"NECTA" char(5), "NECTASC" char(2), "NECTADIV" char(5), "CNECTA" char(3),
+"CBSAPCI" char(1), "NECTAPCI" char(1), "UA" char(5), "UASC" char(2),
+"UATYPE" char(1), "UR" char(1), "CD" char(2), "SLDU" char(3),
+"SLDL" char(3), "VTD" char(6), "VTDI" char(1), "RESERVE2" char(3),
+"ZCTA5" char(5), "SUBMCD" char(5), "SUBMCDCC" char(2), "SDELM" char(5),
+"SDSEC" char(5), "SDUNI" char(5), "AREALAND" char(14) NOT NULL,
+"AREAWATR" char(14) NOT NULL, "AREANAME" varchar(90) NOT NULL,
+"FUNCSTAT" char(1) NOT NULL, "GCUNI" char(1), "POP100" char(9) NOT NULL,
+"HU100" char(9) NOT NULL, "INTPTLAT" char(11) NOT NULL,
+"INTPTLON" char(12) NOT NULL, "LSADC" char(2) NOT NULL,
+"PARTFLAG" char(1), "RESERVE3" char(6), "UGA" char(5),
+"STATENS" char(8) NOT NULL, "COUNTYNS" char(8), "COUSUBNS" char(8),
+"PLACENS" char(8), "CONCITNS" char(8), "AIANHHNS" char(8),
+"AITSNS" char(8), "ANRCNS" char(8), "SUBMCDNS" char(8),
+"CD113" char(2), "CD114" char(2), "CD115" char(2), "SLDU2" char(3),
+"SLDU3" char(3), "SLDU4" char(3), "SLDL2" char(3), "SLDL3" char(3),
+"SLDL4" char(3), "AIANHHSC" char(2), "CSASC" char(2), "CNECTASC" char(2),
+"MEMI" char(1), "NMEMI" char(1), "PUMA" char(5), "RESERVED" char(18));'''
+
+cursor.execute(SQL)
+
+# Data Table 1
+SQL = 'CREATE TABLE IF NOT EXISTS "' + data1tablename + '''" (
+"FILEID" char(6) NOT NULL, "STUSAB" char(2) NOT NULL,
+"CHARITER" char(3) NOT NULL, "CIFSN" char(2) NOT NULL,
+"LOGRECNO" char(7) NOT NULL, "P0010001" INTEGER, "P0010002" INTEGER,
+"P0010003" INTEGER, "P0010004" INTEGER, "P0010005" INTEGER,
+"P0010006" INTEGER, "P0010007" INTEGER, "P0010008" INTEGER,
+"P0010009" INTEGER, "P0010010" INTEGER, "P0010011" INTEGER,
+"P0010012" INTEGER, "P0010013" INTEGER, "P0010014" INTEGER,
+"P0010015" INTEGER, "P0010016" INTEGER, "P0010017" INTEGER,
+"P0010018" INTEGER, "P0010019" INTEGER, "P0010020" INTEGER,
+"P0010021" INTEGER, "P0010022" INTEGER, "P0010023" INTEGER,
+"P0010024" INTEGER, "P0010025" INTEGER, "P0010026" INTEGER,
+"P0010027" INTEGER, "P0010028" INTEGER, "P0010029" INTEGER,
+"P0010030" INTEGER, "P0010031" INTEGER, "P0010032" INTEGER,
+"P0010033" INTEGER, "P0010034" INTEGER, "P0010035" INTEGER,
+"P0010036" INTEGER, "P0010037" INTEGER, "P0010038" INTEGER,
+"P0010039" INTEGER, "P0010040" INTEGER, "P0010041" INTEGER,
+"P0010042" INTEGER, "P0010043" INTEGER, "P0010044" INTEGER,
+"P0010045" INTEGER, "P0010046" INTEGER, "P0010047" INTEGER,
+"P0010048" INTEGER, "P0010049" INTEGER, "P0010050" INTEGER,
+"P0010051" INTEGER, "P0010052" INTEGER, "P0010053" INTEGER,
+"P0010054" INTEGER, "P0010055" INTEGER, "P0010056" INTEGER,
+"P0010057" INTEGER, "P0010058" INTEGER, "P0010059" INTEGER,
+"P0010060" INTEGER, "P0010061" INTEGER, "P0010062" INTEGER,
+"P0010063" INTEGER, "P0010064" INTEGER, "P0010065" INTEGER,
+"P0010066" INTEGER, "P0010067" INTEGER, "P0010068" INTEGER,
+"P0010069" INTEGER, "P0010070" INTEGER, "P0010071" INTEGER,
+"P0020001" INTEGER, "P0020002" INTEGER, "P0020003" INTEGER,
+"P0020004" INTEGER, "P0020005" INTEGER, "P0020006" INTEGER,
+"P0020007" INTEGER, "P0020008" INTEGER, "P0020009" INTEGER,
+"P0020010" INTEGER, "P0020011" INTEGER, "P0020012" INTEGER,
+"P0020013" INTEGER, "P0020014" INTEGER, "P0020015" INTEGER,
+"P0020016" INTEGER, "P0020017" INTEGER, "P0020018" INTEGER,
+"P0020019" INTEGER, "P0020020" INTEGER, "P0020021" INTEGER,
+"P0020022" INTEGER, "P0020023" INTEGER, "P0020024" INTEGER,
+"P0020025" INTEGER, "P0020026" INTEGER, "P0020027" INTEGER,
+"P0020028" INTEGER, "P0020029" INTEGER, "P0020030" INTEGER,
+"P0020031" INTEGER, "P0020032" INTEGER, "P0020033" INTEGER,
+"P0020034" INTEGER, "P0020035" INTEGER, "P0020036" INTEGER,
+"P0020037" INTEGER, "P0020038" INTEGER, "P0020039" INTEGER,
+"P0020040" INTEGER, "P0020041" INTEGER, "P0020042" INTEGER,
+"P0020043" INTEGER, "P0020044" INTEGER, "P0020045" INTEGER,
+"P0020046" INTEGER, "P0020047" INTEGER, "P0020048" INTEGER,
+"P0020049" INTEGER, "P0020050" INTEGER, "P0020051" INTEGER,
+"P0020052" INTEGER, "P0020053" INTEGER, "P0020054" INTEGER,
+"P0020055" INTEGER, "P0020056" INTEGER, "P0020057" INTEGER,
+"P0020058" INTEGER, "P0020059" INTEGER, "P0020060" INTEGER,
+"P0020061" INTEGER, "P0020062" INTEGER, "P0020063" INTEGER,
+"P0020064" INTEGER, "P0020065" INTEGER, "P0020066" INTEGER,
+"P0020067" INTEGER, "P0020068" INTEGER, "P0020069" INTEGER,
+"P0020070" INTEGER, "P0020071" INTEGER, "P0020072" INTEGER,
+"P0020073" INTEGER);'''
+
+cursor.execute(SQL)
+
+# Data Table 2
+SQL = 'CREATE TABLE IF NOT EXISTS "' + data2tablename + '''" (
+"FILEID" char(6) NOT NULL, "STUSAB" char(2) NOT NULL,
+"CHARITER" char(3) NOT NULL, "CIFSN" char(2) NOT NULL,
+"LOGRECNO" char(7) NOT NULL, "P0030001" INTEGER , "P0030002" INTEGER ,
+"P0030003" INTEGER , "P0030004" INTEGER , "P0030005" INTEGER ,
+"P0030006" INTEGER , "P0030007" INTEGER , "P0030008" INTEGER ,
+"P0030009" INTEGER , "P0030010" INTEGER , "P0030011" INTEGER ,
+"P0030012" INTEGER , "P0030013" INTEGER , "P0030014" INTEGER ,
+"P0030015" INTEGER , "P0030016" INTEGER , "P0030017" INTEGER ,
+"P0030018" INTEGER , "P0030019" INTEGER , "P0030020" INTEGER ,
+"P0030021" INTEGER , "P0030022" INTEGER , "P0030023" INTEGER ,
+"P0030024" INTEGER , "P0030025" INTEGER , "P0030026" INTEGER ,
+"P0030027" INTEGER , "P0030028" INTEGER , "P0030029" INTEGER ,
+"P0030030" INTEGER , "P0030031" INTEGER , "P0030032" INTEGER ,
+"P0030033" INTEGER , "P0030034" INTEGER , "P0030035" INTEGER ,
+"P0030036" INTEGER , "P0030037" INTEGER , "P0030038" INTEGER ,
+"P0030039" INTEGER , "P0030040" INTEGER , "P0030041" INTEGER ,
+"P0030042" INTEGER , "P0030043" INTEGER , "P0030044" INTEGER ,
+"P0030045" INTEGER , "P0030046" INTEGER , "P0030047" INTEGER ,
+"P0030048" INTEGER , "P0030049" INTEGER , "P0030050" INTEGER ,
+"P0030051" INTEGER , "P0030052" INTEGER , "P0030053" INTEGER ,
+"P0030054" INTEGER , "P0030055" INTEGER , "P0030056" INTEGER ,
+"P0030057" INTEGER , "P0030058" INTEGER , "P0030059" INTEGER ,
+"P0030060" INTEGER , "P0030061" INTEGER , "P0030062" INTEGER ,
+"P0030063" INTEGER , "P0030064" INTEGER , "P0030065" INTEGER ,
+"P0030066" INTEGER , "P0030067" INTEGER , "P0030068" INTEGER ,
+"P0030069" INTEGER , "P0030070" INTEGER , "P0030071" INTEGER ,
+"P0040001" INTEGER , "P0040002" INTEGER , "P0040003" INTEGER ,
+"P0040004" INTEGER , "P0040005" INTEGER , "P0040006" INTEGER ,
+"P0040007" INTEGER , "P0040008" INTEGER , "P0040009" INTEGER ,
+"P0040010" INTEGER , "P0040011" INTEGER , "P0040012" INTEGER ,
+"P0040013" INTEGER , "P0040014" INTEGER , "P0040015" INTEGER ,
+"P0040016" INTEGER , "P0040017" INTEGER , "P0040018" INTEGER ,
+"P0040019" INTEGER , "P0040020" INTEGER , "P0040021" INTEGER ,
+"P0040022" INTEGER , "P0040023" INTEGER , "P0040024" INTEGER ,
+"P0040025" INTEGER , "P0040026" INTEGER , "P0040027" INTEGER ,
+"P0040028" INTEGER , "P0040029" INTEGER , "P0040030" INTEGER ,
+"P0040031" INTEGER , "P0040032" INTEGER , "P0040033" INTEGER ,
+"P0040034" INTEGER , "P0040035" INTEGER , "P0040036" INTEGER ,
+"P0040037" INTEGER , "P0040038" INTEGER , "P0040039" INTEGER ,
+"P0040040" INTEGER , "P0040041" INTEGER , "P0040042" INTEGER ,
+"P0040043" INTEGER , "P0040044" INTEGER , "P0040045" INTEGER ,
+"P0040046" INTEGER , "P0040047" INTEGER , "P0040048" INTEGER ,
+"P0040049" INTEGER , "P0040050" INTEGER , "P0040051" INTEGER ,
+"P0040052" INTEGER , "P0040053" INTEGER , "P0040054" INTEGER ,
+"P0040055" INTEGER , "P0040056" INTEGER , "P0040057" INTEGER ,
+"P0040058" INTEGER , "P0040059" INTEGER , "P0040060" INTEGER ,
+"P0040061" INTEGER , "P0040062" INTEGER , "P0040063" INTEGER ,
+"P0040064" INTEGER , "P0040065" INTEGER , "P0040066" INTEGER ,
+"P0040067" INTEGER , "P0040068" INTEGER , "P0040069" INTEGER ,
+"P0040070" INTEGER , "P0040071" INTEGER , "P0040072" INTEGER ,
+"P0040073" INTEGER , "H0010001" INTEGER , "H0010002" INTEGER ,
+"H0010003" INTEGER);'''
+
+cursor.execute(SQL)
+
+# Iterate through each file in the directory
+for datafile in glob.glob(os.path.join(srcDir, '*.pl')):
+
+    # Determine file type
+    if datafile.endswith('geo2010.pl'):
+        datatable = 'geo'
+        datacount = 100     # 101 fields
+    elif datafile.endswith('012010.pl'):
+        datatable = data1tablename
+        datacount = 148     # 149 fields
+    elif datafile.endswith('022010.pl'):
+        datatable = data2tablename
+        datacount = 151     # 152 fields
+    else:
+        print 'File not recognized: ' + datafile
+        break
+
+    # Iterate through each line in the file
+    if datatable == 'geo':
+        # It's a geography header file
+        for line in open(datafile, 'rb'):
+            parseddata = unpack(geofields, line.rstrip('\n')) # Unpack the fields and copy to a list
+            SQL = 'INSERT INTO "' + geotablename + '" VALUES(' + '?, ' * datacount + '?)'
+            cursor.execute(SQL, parseddata)
+    else:
+        # It's a data file
+        for line in open(datafile, 'rb'):
+            parseddata = line.rstrip('\n').split(',')    # Copy the line to a list
+            SQL = 'INSERT INTO "' + datatable + '" VALUES(' + '?, ' * datacount + '?)'
+            cursor.execute(SQL, parseddata)
+
+db.commit()
