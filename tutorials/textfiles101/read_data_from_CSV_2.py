@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 """
-This file shows how to read data from a file using Python's 
-built-in csv module.
+This script shows how to read data using Python's built-in csv module.
 
     http://docs.python.org/library/csv.html
 
@@ -46,8 +45,8 @@ We already imported the csv module at the top of this script.
 Now we create a csv "reader" object, capable of stepping through
 each line of the file and smartly parsing it out for us. 
 
-We create the reader object by passing an open file to
-the csv's reader method.
+The reader object is created by passing an open file to csv's 
+reader method.
 """
 
 print "\n\nExample 2: Read file with the CSV module\n"
