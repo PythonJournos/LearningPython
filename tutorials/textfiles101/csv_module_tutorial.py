@@ -58,7 +58,8 @@ Now we create a csv "reader" object, capable of stepping through
 each line of the file and smartly parsing the fields.
 
 The reader object is created by passing an open file to csv's 
-reader method.
+reader function.
+
 """
 
 print "\n\nExample 2: Read file with the CSV module\n"
@@ -76,11 +77,10 @@ it gives us "San Luis Trust Bank, FSB" as a single field.
 
             Customizing the Delimiters
 
-By default, csv reader assumes the file is comma-delimited.
-You can customize the delimiters, quote characters, and
-a number of other options by setting additional parameters
-when you create the reader object. More details on the avaiable 
-options are here:
+By default, csv assumes the file is comma-delimited.  You can 
+customize the delimiters, quote characters, and a number of 
+other options by setting additional parameters when you create 
+the reader object. More details on the avaiable options are here:
   http://docs.python.org/library/csv.html#dialects-and-formatting-parameters
 
 Below, we set the field delimiter to a tab so that we can read a version 
@@ -99,8 +99,8 @@ for record in bank_file:
         Working with Column Headers
 
 
-CSVs often come with column headers that you'll want to retain as labels
-for data points. There are a number of ways to do this, and the approach
+Text files often come with column headers that you'll want to retain as labels
+for your data. There are a number of ways to do this, and the approach
 can vary depending on the number of columns and size of the file.
 
 The simplest approach is to read all of the data into memory as a list,
@@ -152,7 +152,9 @@ for record in bank_records:
 # and writes to the output file
 outfile.close()
 
+
 """
+
 When working with large files, it's often wise to avoid reading the 
 entire file into memory. Instead, you can read the data as a stream,
 plucking each line from the file object as needed.
