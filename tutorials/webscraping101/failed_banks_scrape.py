@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 """
-This is the first example scrape in our series.
+This is the first example scrape in our series.  
 
 In this scrape, we'll demonstrate some Python basics
 using the FDIC's Failed Banks List.
 
 USAGE:
+
 You can run this scrape by going to command line, navigating to the
 directory containing this script, and typing the below command:
 
@@ -13,16 +14,15 @@ directory containing this script, and typing the below command:
 
 
 NOTE:
+
 The original FDIC data is located at the below URL:
 
     http://www.fdic.gov/bank/individual/failed/banklist.html
 
 In order to be considerate to the FDIC's servers, we're scraping 
-a copy of the page stored on one of Amazon S3.
-
-
-
+a copy of the page stored on Amazon S3.
 """
+
 # Import a built-in library for working with data on the Web
 # DOCS: http://docs.python.org/library/urllib.html
 import urllib
@@ -61,7 +61,7 @@ columns = []
 for header in headers:
     columns.append(header.text)
 
-# Use the tab character's 'join' method to concatenate
+# Use the tab character's "join" method to concatenate
 # the column names into a single, tab-separated string.
 # Then print out the header column.
 print '\t'.join(columns)
@@ -69,8 +69,10 @@ print '\t'.join(columns)
 # 4) Process the data, skipping the initial header row
 for row in rows[1:]:
 
-    # Extract the data points from the table row and print them
+    # Extract data points from the table row
     data = row.findAll('td')
+
+    # Pluck out the text of each field and store in a separate variable
     bank_name = data[0].text    
     city = data[1].text
     state = data[2].text
@@ -78,4 +80,5 @@ for row in rows[1:]:
     ai =  data[4].text
     closed_on = data[5].text 
     updated = data[6].text
+
     print "\t".join([bank_name, city, state, cert_num, ai, closed_on, updated])
