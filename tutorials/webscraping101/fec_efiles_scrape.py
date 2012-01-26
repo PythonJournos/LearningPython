@@ -19,6 +19,7 @@ HELPFUL LINKS:
  * BeautifulSoup: http://www.crummy.com/software/BeautifulSoup/documentation.html
  * CSV:           http://docs.python.org/library/csv.html
  * requests:      http://docs.python-requests.org/en/latest/user/quickstart/
+ * sys:           http://docs.python.org/library/sys.html
 
  HTTP codes
  * http://en.wikipedia.org/wiki/List_of_HTTP_status_codes
