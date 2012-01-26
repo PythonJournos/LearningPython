@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-The third scrape in our series demonstrates how to "fill out" an 
+This scrape demonstrates how to "fill out" an 
 online form to fetch data from a remote server.
 
 More accurately, we'll show how to make a POST request to 
@@ -14,7 +14,16 @@ The electronic filings/form we're using in this script can be found at:
 
     http://fec.gov/finance/disclosure/efile_search.shtml
 
+USAGE:
+
+You can run this scrape by going to command line, navigating to the
+directory containing this script, and typing the below command:
+
+    python fec_efiles_scrape.py
+
+
 HELPFUL LINKS:
+
  Python Modules used in this script:
  * BeautifulSoup: http://www.crummy.com/software/BeautifulSoup/documentation.html
  * CSV:           http://docs.python.org/library/csv.html

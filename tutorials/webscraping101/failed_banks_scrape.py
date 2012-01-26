@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 """
-This is the first example scrape in our series.  
-
-In this scrape, we'll demonstrate some Python basics
-using the FDIC's Failed Banks List.
+This scrape demonstrates some Python basics using the FDIC's Failed Banks List.
+It downloads a single web page and shows how to use a 3rd-party library
+to extract data from the HTML.
 
 USAGE:
 
@@ -11,7 +10,6 @@ You can run this scrape by going to command line, navigating to the
 directory containing this script, and typing the below command:
 
     python failed_banks_scrape.py
-
 
 NOTE:
 
