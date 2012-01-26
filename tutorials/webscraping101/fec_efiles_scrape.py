@@ -3,7 +3,7 @@
 This scrape demonstrates how to "fill out" an 
 online form to fetch data from a remote server.
 
-More accurately, we'll show how to make a POST request to 
+More accurately, we'll show how to make a POST request
 to fetch a list of links for campaign finance reports
 from the Federal Election Election Commission.
 
