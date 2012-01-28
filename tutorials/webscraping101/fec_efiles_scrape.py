@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-This scrape demonstrates how to "fill out" an 
+This scrape demonstrates how to "fill out" an
 online form to fetch data from a remote server.
 
 More accurately, we'll show how to make a POST request
@@ -48,8 +48,8 @@ form_data = {
     'frmtype':'F3P', # form type
 }
 
-# Make the POST request with the form dictionary. This should 
-# return a response object containing the status of the request -- ie 
+# Make the POST request with the form dictionary. This should
+# return a response object containing the status of the request -- ie
 # whether or not it was successful -- and raw HTML for the returned page.
 response = requests.post('http://query.nictusa.com/cgi-bin/dcdev/forms/', data=form_data)
 
@@ -58,9 +58,9 @@ if response.status_code == 200:
 
     # The raw HTML is stored in the response object's "text" attribute
     soup = BeautifulSoup(response.text)
-    links = soup.findAll('a') 
+    links = soup.findAll('a')
 
-    # Extract the download links 
+    # Extract the download links
     download_links = []
     for link in links:
         if link.text == 'Download':
@@ -71,14 +71,14 @@ if response.status_code == 200:
 
     download_links = soup.findAll('a', href=lambda path: path.startswith('/cgi-bin/dcdev/forms/DL/'))
 
-    This one-liner leverages one of BeautifulSoup's more advanced features -- specifically, the 
-    ability to filter the "findAll" method's results by applying regular expressions or 
+    This one-liner leverages one of BeautifulSoup's more advanced features -- specifically, the
+    ability to filter the "findAll" method's results by applying regular expressions or
     lambda functions.
-    
-    Above, we used a lambda function to filter for links with "href" 
-    attributes starting with a certain URL path. 
-     
-    To learn more: 
+
+    Above, we used a lambda function to filter for links with "href"
+    attributes starting with a certain URL path.
+
+    To learn more:
 
     * http://www.crummy.com/software/BeautifulSoup/documentation.html
     * http://stackoverflow.com/questions/890128/python-lambda-why
@@ -87,8 +87,8 @@ if response.status_code == 200:
 
     # Now that we have our target links, we can download CSVs for further processing.
 
-    # Below is the base URL for FEC Filing CSV downloads. 
-    # Notice the "%s" format character at the end. 
+    # Below is the base URL for FEC Filing CSV downloads.
+    # Notice the "%s" format character at the end.
     BASE_URL =  'http://query.nictusa.com/comma/%s.fec'
 
     # To get at the raw data for each filing, we'll combine the above BASE_URL with
@@ -115,25 +115,25 @@ if response.status_code == 200:
         # Create a list of data rows by splitting on the line terminator character
         data_rows = response.text.split('\n')
 
-        # Use the CSV module to parse the comma-separated rows of data. Calling 
-        # the built-in "list" function causes csv to parse our data strings 
+        # Use the CSV module to parse the comma-separated rows of data. Calling
+        # the built-in "list" function causes csv to parse our data strings
         # into lists of distinct data points (the same as if it they were
         # in a spreadsheet or database table).
         # http://docs.python.org/library/csv.html
         data = list(csv.reader(data_rows))
 
-        # The first row in the FEC data contains useful info about the format of 
+        # The first row in the FEC data contains useful info about the format of
         # the remaining rows in the file.
         version = data[0][2] # e.g., 8.0
         print "Downloaded Electronic filing with File Format Version %s" % version
-        
+
         ### WHAT'S NEXT? ###
         # In a normal script you would use the version number to fetch the
         # the appropriate file formats, which could then be used to process
         # the remaining data in the file.
 
-        # But we know you get the picture -- and we want to be kind to 
-        # the FEC's servers -- so we'll exit the program early and assign 
+        # But we know you get the picture -- and we want to be kind to
+        # the FEC's servers -- so we'll exit the program early and assign
         # the rest of the script as homework :-)
         sys.exit("Exited script after processing one link.")
 
