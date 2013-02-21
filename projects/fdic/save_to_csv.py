@@ -86,12 +86,12 @@ for row in data:
         row['updated'] = ''
 
 with open(savedir + 'fdic_output.txt', 'w') as outputfile:
-    wtr = csv.DictWriter(outputfile, delimiter= '|', fieldnames=outputheaders,
-        lineterminator = '\n')
+    wtr = csv.DictWriter(outputfile, delimiter=',', fieldnames=outputheaders,
+        lineterminator='\n', quotechar='"', quoting=csv.QUOTE_NONNUMERIC)
 
     # Add headers to output
     wtr.writeheader()
     
-    for row in data:
-        wtr.writerow(row)
+    # Write the data
+    wtr.writerows(data)
 
