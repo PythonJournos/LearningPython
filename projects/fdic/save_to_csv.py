@@ -5,19 +5,28 @@ This module shows how to use the built-in csv module to
 easily write out data to a file.
 
 """
-from datetime import datetime
 
-# Import the scraper function
+# User variables
+savedir = 'C:\\data\\Python\\'
+outputheaders = ['bank', 'city', 'state', 'cert_num', 'acq_inst',
+    'closed', 'updated', 'url']
+
+# Import scraper function and necessary libraries
 from scraper import scrape_data
+from datetime import datetime
+import csv
 
 # Function to change date strings to YYYY-MM-DD format
-#   http://docs.python.org/2/library/datetime.html#datetime-objects
-def convert_date(datestring):
-    # First, transform the incoming string to a Python datetime object
-    dt = datetime.strptime(datestring, '%B %d, %Y')
-    # Then use the datetime object's strftime method to convert to final format
-    final_date = dt.strftime('%Y-%m-%d')
-    return final_date
+def convertdatestring(datestring):
+    # Create variable for our return value
+    ret_date = ''
+    try:
+        dt = datetime.strptime(datestring, '%B %d, %Y')
+        ret_date = dt.strftime('%Y-%m-%d')
+    except:
+        pass
+    
+    return ret_date
 
 # Store the results of the scrape_data function
 # Results are dictionaries that look like below
@@ -31,26 +40,42 @@ data = [
         'acq_inst': 'Southern New Hampshire Bank & Trust',
         'closed': 'February 15, 2013',
         'updated': 'February 20, 2013',
-        'url': 'http://www.fdic.gov/bank/individual/failed/firstalliance.html,
-    },
+        'url': 'http://www.fdic.gov/bank/individual/failed/firstalliance.html'
+    }
 ]
 """
+
 data = scrape_data()
 
-# Loop through results and do perform basic data clean-up and conversion.
-# Note that we're changing the data "in place" (i.e., in the pre-existing dictionary)
+# Let's mess up one row to demo try/except:
+# data[0]['closed'] = 'Jnauary 15, 2013'
+
+# Each dictionary has these keys
+# bank, city, state, cert_num, acq_inst, closed, updated, url
+
+# Iterate through each row of our data and verify data types valid
 for row in data:
-    # Convert cert_num to an integer
-    row['cert_num'] = int(row['cert_num'])
+    # First, we'll verify cert_num is an integer
+    try:
+        row['cert_num'] = int(row['cert_num'])
+    except:
+        row['cert_num'] = 0
 
     # Now we'll look at the two date fields. This is a little more
     # complicated, so we'll create a function that we can use for
     # both fields. We need to convert them to YYYY-MM-DD format.
-    row['closed'] = convert_date(row['closed'])
-    row['updated'] = convert_date(row['updated'])
+    try:
+        row['closed'] = convertdatestring(row['closed'])
+    except:
+        row['closed'] = ''
+    
+    try:
+        row['updated'] = convertdatestring(row['updated'])
+    except:
+        row['updated'] = ''
 
-for row in data:
-    print row
-#TODO: CSV writer here
-# dynamically determine the file path using os.path (this will avoid windows path headaches)
-#with open(
+with open(savedir + 'fdic_output.csv', 'w') as outputfile:
+    wtr = csv.DictWriter(outputfile, delimiter= '|', fieldnames=outputheaders)
+    
+    for row in data:
+        wtr.writerow(row)
