@@ -11,8 +11,10 @@ savedir = 'C:\\data\\Python\\'
 outputheaders = ['bank', 'city', 'state', 'cert_num', 'acq_inst',
     'closed', 'updated', 'url']
 
-# Import scraper function and necessary libraries
-from scraper import scrape_data
+# Import module created in Part I
+# from scraper import scrape_data
+
+# Import datetime modules
 from datetime import datetime
 import csv
 
@@ -30,8 +32,18 @@ def convertdatestring(datestring):
 
 # Store the results of the scrape_data function
 # Results are dictionaries that look like below
-"""
+
 data = [
+    {
+        'bank': 'First Alliance',
+        'city': 'Manchester',
+        'state': 'NH',
+        'cert_num': '34264',
+        'acq_inst': 'Southern New Hampshire Bank & Trust',
+        'closed': 'February 15, 2013',
+        'updated': 'February 20, 2013',
+        'url': 'http://www.fdic.gov/bank/individual/failed/firstalliance.html'
+    },
     {
         'bank': 'First Alliance',
         'city': 'Manchester',
@@ -43,9 +55,8 @@ data = [
         'url': 'http://www.fdic.gov/bank/individual/failed/firstalliance.html'
     }
 ]
-"""
 
-data = scrape_data()
+# data = scrape_data()
 
 # Let's mess up one row to demo try/except:
 # data[0]['closed'] = 'Jnauary 15, 2013'
@@ -74,8 +85,13 @@ for row in data:
     except:
         row['updated'] = ''
 
-with open(savedir + 'fdic_output.csv', 'w') as outputfile:
-    wtr = csv.DictWriter(outputfile, delimiter= '|', fieldnames=outputheaders)
+with open(savedir + 'fdic_output.txt', 'w') as outputfile:
+    wtr = csv.DictWriter(outputfile, delimiter= '|', fieldnames=outputheaders,
+        lineterminator = '\n')
+
+    # Add headers to output
+    wtr.writeheader()
     
     for row in data:
         wtr.writerow(row)
+
