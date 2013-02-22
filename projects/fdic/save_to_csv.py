@@ -25,7 +25,8 @@ def convertdatestring(datestring):
     try:
         dt = datetime.strptime(datestring, '%B %d, %Y')
         ret_date = dt.strftime('%Y-%m-%d')
-    except:
+    except ValueError:
+        print("Can't convert %s to date. Setting to NULL." % datestring)
         pass
     
     return ret_date
@@ -61,15 +62,13 @@ data = [
 # Let's mess up one row to demo try/except:
 # data[0]['closed'] = 'Jnauary 15, 2013'
 
-# Each dictionary has these keys
-# bank, city, state, cert_num, acq_inst, closed, updated, url
-
 # Iterate through each row of our data and verify data types valid
 for row in data:
     # First, we'll verify cert_num is an integer
     try:
         row['cert_num'] = int(row['cert_num'])
-    except:
+    except ValueError:
+        print("%s is not a valid integer. Setting to zero." % row['cert_num'])
         row['cert_num'] = 0
 
     # Now we'll look at the two date fields. This is a little more
@@ -86,7 +85,7 @@ for row in data:
         row['updated'] = ''
 
 with open(savedir + 'fdic_output.txt', 'w') as outputfile:
-    wtr = csv.DictWriter(outputfile, delimiter=',', fieldnames=outputheaders,
+    wtr = csv.DictWriter(outputfile, delimiter='|', fieldnames=outputheaders,
         lineterminator='\n', quotechar='"', quoting=csv.QUOTE_NONNUMERIC)
 
     # Add headers to output
@@ -94,4 +93,3 @@ with open(savedir + 'fdic_output.txt', 'w') as outputfile:
     
     # Write the data
     wtr.writerows(data)
-
