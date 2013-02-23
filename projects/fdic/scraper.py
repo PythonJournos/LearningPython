@@ -57,26 +57,34 @@ def scrape_data():
         # Extract data points from the table row
         data = tr.findAll('td')
 
-        # Pluck out the text of each field and store as a 
-        # separate key in a dictionary
-        #   http://docs.python.org/2/tutorial/datastructures.html#dictionaries
-        row = {
-            'bank_name': data[0].text,
-            'city': data[1].text,
-            'state': data[2].text,
-            'cert_num': data[3].text,
-            'acq_inst': data[4].text,
-            'closed': data[5].text.strip(),
-            'updated': data[6].text.strip(),
-            'url': 'http://www.fdic.gov/bank/individual/failed/' + data[0].a['href'],
-        }
-        # Add the dictionary to our final set of results
+        # Pluck out the text of each field, and perform a bit of clean-up
+        row = [
+            data[0].text,
+            data[1].text,
+            data[2].text,
+            data[3].text,
+            data[4].text,
+            data[5].text.strip(),
+            data[6].text.strip(),
+            'http://www.fdic.gov/bank/individual/failed/' + data[0].a['href'],
+        ]
+        # Add the list of data to our results list (we'll end up with a list of lists)
         results.append(row)
 
-    # Return the results 
-    return results
+    # Let's package up the results with the field names
+    headers = [
+        'bank_name',
+        'city',
+        'state',
+        'cert_num',
+        'acq_inst',
+        'closed',
+        'updated',
+        'url'
+    ]
+    return [headers, results]
 
 if __name__ == '__main__':
     results = scrape_data()
-    for row in results:
-        print row['url']
+    for row in results[1]:
+        print row
