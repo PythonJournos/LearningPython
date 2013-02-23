@@ -71,15 +71,16 @@ for row in data:
     except:
         row[6] = ''
 
-filename = os.path.join(PROJECT_DIR, 'fdic.txt')
 
-# This is a Python idiom you'll see often. 
+# Below are a few Python idioms you'll see often. 
 # You're opening a file so that you can read data from it.
-# Then, you use the csv module to help write the data to a file
-#   http://docs.python.org/2/library/csv.html#csv.DictReader
+# Then, you use the csv module to help write data to the file.
+#   http://docs.python.org/2/library/functions.html#open
+#   http://docs.python.org/2/library/csv.html
 
+filename = os.path.join(PROJECT_DIR, 'fdic.txt')
 with open(filename, 'wb') as outputfile:
-    wtr = csv.writer(outputfile, delimiter='|', quotechar='"')
+    wtr = csv.writer(outputfile, delimiter='|')
 
     # Add headers tooutput
     wtr.writerow(headers)

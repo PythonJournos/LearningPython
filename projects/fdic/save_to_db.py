@@ -38,7 +38,7 @@ cur.execute(TBL_CREATE_STMT)
 # Commit our change
 conn.commit()
 
-# Get results data (recall that it's a list of two elements [headers, data]
+# Get results data (recall that it's a list of two elements [headers, data])
 results = scrape_data()
 data = results[1]
 
