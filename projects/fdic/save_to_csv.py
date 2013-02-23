@@ -71,7 +71,7 @@ for row in data:
     except:
         row[6] = ''
 
-filename = os.path.join(PROJECT_DIR, 'fdic_output.txt')
+filename = os.path.join(PROJECT_DIR, 'fdic.txt')
 
 # This is a Python idiom you'll see often. 
 # You're opening a file so that you can read data from it.
@@ -79,11 +79,10 @@ filename = os.path.join(PROJECT_DIR, 'fdic_output.txt')
 #   http://docs.python.org/2/library/csv.html#csv.DictReader
 
 with open(filename, 'wb') as outputfile:
-    wtr = csv.DictWriter(outputfile, delimiter='|', fieldnames=headers,
-                         lineterminator='\n', quotechar='"', quoting=csv.QUOTE_NONNUMERIC)
+    wtr = csv.writer(outputfile, delimiter='|', quotechar='"')
 
-    # Add headers to output
-    wtr.writeheader()
+    # Add headers tooutput
+    wtr.writerow(headers)
     
     # Write the data
     wtr.writerows(data)

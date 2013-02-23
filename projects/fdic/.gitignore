@@ -1,2 +1,5 @@
-*.vim
+*.csv
 *.pyc
+*.txt
+*.sqlite
+*.vim
