@@ -4,7 +4,7 @@
     <h1>{{ bank.bank }}</h1>
     <h2>{{ bank.city}}, {{ bank.state }}</h2>
     <h4>Closed {{ bank.closed }}</h4>
-    <div>{{ bank.bank }} has the certification number {{ bank.cert_num }} and was closed on {{ bank.closed }}.
+    <div>{{ bank.bank }} has the certification number <strong>{{ bank.cert_num }}</strong> and was closed on <strong>{{ bank.closed }}</strong>.
         <br/>It was acquired by {{ bank.acq_inst }}.</div>
     {% if same_state_banks.count() > 0 %}
     <div><h2>{{ same_state_banks.count() }} more banks in {{ bank.state }}</h2>
