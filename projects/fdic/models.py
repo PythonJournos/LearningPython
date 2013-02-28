@@ -17,7 +17,6 @@ class Bank(Model):
     acq_inst = CharField()
     closed = DateField()
     updated = DateField()
-    url = CharField()
 
     # What is this thing?
     class Meta:
