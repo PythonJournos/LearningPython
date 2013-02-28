@@ -6,7 +6,6 @@
     <h4>Closed {{ bank.closed }}</h4>
     <p>{{ bank.bank }} has the certification number {{ bank.cert_num }} and was closed on {{ bank.closed }}.
         <br/>It was acquired by {{ bank.acq_inst }}.
-        <br/><a href="{{ bank.url }}">See this bank</a> on the FDIC Web site.</p>
     {% if same_state_banks > 0 %}
     <p><h2>{{ same_state_banks.count() }} more banks in {{ bank.state }}</h2>
         <ul>{% for bank in same_state_banks %}
