@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Failed banks</h1>
+    <ul>{% for bank in banks %}
+        <li><h4><a href="/bank/{{ bank.cert_num }}/">{{ bank.bank }}</a></h4>
+        {{ bank.city }}, {{ bank.state }}</li>
+    {% endfor %}</ul>
+{% endblock %}
