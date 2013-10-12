@@ -94,6 +94,7 @@ if response.status_code == 200:
     # To get at the raw data for each filing, we'll combine the above BASE_URL with
     # unique FEC report numbers (found in the download_links that we extracted above).
 
+
     for link in download_links:
 
         # Below, we use a single line of code to extract the unique FEC report number:
@@ -124,7 +125,32 @@ if response.status_code == 200:
 
         # The first row in the FEC data contains useful info about the format of
         # the remaining rows in the file.
-        version = data[0][2] # e.g., 8.0
+        # However, after the initial creation of this scraper, there is at least one bad
+        # link that we have to handle.
+
+        # First we try to extract the version. If it is successful, then continue.
+        # If not, we moves to the exception handling section.
+        try:
+            version = data[0][2] # e.g., 8.0
+        # This exception handling section looks for our bad link which causes the program
+        # to throw an IndexError. We going to define a special url for this case.
+        except IndexError:
+            # If you look at the code below, you will notice that it repeats what we had above.
+            # However, the csv_download link is redefined.
+            # For the best practice, we would pull out this pattern into a function.
+            # Then we would call the function above then again if the error occurs.
+            # We encourage you to try to turn this piece of code into a function that is
+            # called twice.
+            ALT_BASE_URL = 'http://query.nictusa.com/showcsv/nicweb26502/%s.fec'
+            csv_download_link =  ALT_BASE_URL % fec_num
+            response = requests.get(csv_download_link)
+            data_rows = response.text.split('\n')
+            data = list(csv.reader(data_rows))
+            version = data[0][2] # e.g., 8.0
+            # If the program has another index error at this point, this means that our
+            # catch/fix didn't work. More troubleshooting and exception handling might
+            # be needed.
+
         print "Downloaded Electronic filing with File Format Version %s" % version
 
         ### WHAT'S NEXT? ###
