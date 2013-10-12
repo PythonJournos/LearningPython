@@ -134,6 +134,7 @@ if response.status_code == 200:
             version = data[0][2] # e.g., 8.0
         # This exception handling section looks for our bad link which causes the program
         # to throw an IndexError. We going to define a special url for this case.
+
         except IndexError:
             # If you look at the code below, you will notice that it repeats what we had above.
             # However, the csv_download link is redefined.
